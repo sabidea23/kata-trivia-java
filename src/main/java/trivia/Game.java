@@ -22,7 +22,7 @@ public class Game implements IGame {
    }
 
    public void roll(int roll) {
-      Player player = players.get(currentPlayer);
+      Player player = getCurrentPlayer();
 
       System.out.println(player.getName() + " is the current player");
       System.out.println("They have rolled a " + roll);
@@ -47,49 +47,41 @@ public class Game implements IGame {
    }
 
    private void printCategoryAndAsk() {
-      Category category = currentCategory();
+      Category category = Category.getCategoryForPlace(players.get(currentPlayer).getPlace());
+
       System.out.println("The category is " + category);
-      askQuestion(category);
-   }
-
-   private void askQuestion(Category category) {
       System.out.println(questions.get(category).remove());
-   }
 
-   private Category currentCategory() {
-      return Category.getCategoryForPlace(players.get(currentPlayer).getPlace());
    }
 
    public boolean handleCorrectAnswer() {
-      Player player = players.get(currentPlayer);
+      Player player = getCurrentPlayer();
 
       if (player.isInPenaltyBox()) {
          if (player.isGettingOutOfPenaltyBox()) {
-            System.out.println("Answer was correct!!!!");
-            player.addCoin();
-            System.out.println(player.getFormattedCoinCount());
-
-            boolean winner = !isGameWon(player);
-            nextPlayer();
-            return winner;
+            return checkWinner(player);
          } else {
             nextPlayer();
             return true;
          }
 
       } else {
-         System.out.println("Answer was corrent!!!!");
-         player.addCoin();
-         System.out.println(player.getFormattedCoinCount());
-
-         boolean winner = !isGameWon(player);
-         nextPlayer();
-         return winner;
+         return checkWinner(player);
       }
    }
 
+   private boolean checkWinner(Player player) {
+      System.out.println("Answer was correct!!!!");
+      player.addCoin();
+      System.out.println(player.getFormattedCoinCount());
+
+      boolean winner = isGameWon(player);
+      nextPlayer();
+      return winner;
+   }
+
    public boolean wrongAnswer() {
-      Player player = players.get(currentPlayer);
+      Player player = getCurrentPlayer();
 
       System.out.println("Question was incorrectly answered");
       System.out.println(player.getName() + " was sent to the penalty box");
@@ -103,7 +95,11 @@ public class Game implements IGame {
       currentPlayer = (currentPlayer + 1) % players.size();
    }
 
+   private Player getCurrentPlayer() {
+      return players.get(currentPlayer);
+   }
+
    private boolean isGameWon(Player player) {
-      return player.getPurse() == GameConstants.WINNING_COINS;
+      return player.getPurse() != GameConstants.WINNING_COINS;
    }
 }
