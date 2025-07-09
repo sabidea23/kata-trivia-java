@@ -64,7 +64,7 @@ public class Game implements IGame {
 
    private void printCategoryAndAsk() {
       Category category = currentCategory();
-      System.out.println("The category is " + formatCategory(category));
+      System.out.println("The category is " + category);
       askQuestion(category);
    }
 
@@ -73,22 +73,7 @@ public class Game implements IGame {
    }
 
    private Category currentCategory() {
-      int place = players.get(currentPlayer).getPlace() - 1;
-      return switch (place % 12) {
-         case 0, 4, 8 -> Category.POP;
-         case 1, 5, 9 -> Category.SCIENCE;
-         case 2, 6, 10 -> Category.SPORTS;
-         default -> Category.ROCK;
-      };
-   }
-
-   private String formatCategory(Category category) {
-      return switch (category) {
-         case POP -> "Pop";
-         case SCIENCE -> "Science";
-         case SPORTS -> "Sports";
-         case ROCK -> "Rock";
-      };
+      return Category.fromPlace(players.get(currentPlayer).getPlace());
    }
 
    public boolean handleCorrectAnswer() {
