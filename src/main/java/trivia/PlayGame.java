@@ -17,7 +17,7 @@ public class PlayGame {
       if (playerCount < 1 || playerCount > 4) throw new IllegalArgumentException("No player 1..4");
       System.out.println("Reading names for " + playerCount + " players:");
 
-      IGame aGame = new GameOld();
+      IGame aGame = new Game();
 
       for (int i = 1; i <= playerCount; i++) {
          System.out.print("Player "+i+" name: ");
@@ -33,6 +33,8 @@ public class PlayGame {
          int roll = readRoll();
          aGame.roll(roll);
 
+         // logical error
+         // player should not answer questions if they are in the penalty box and rolled an odd number
          System.out.print(">> Was the answer correct? [y/n] ");
          boolean correct = readYesNo();
          if (correct) {
