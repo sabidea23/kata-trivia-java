@@ -6,6 +6,7 @@ public class Player {
     private int purse;
     private int place;
     private boolean inPenaltyBox;
+    private boolean isGettingOutOfPenaltyBox;
 
     public Player(String name) {
         this.name = name;
@@ -19,9 +20,6 @@ public class Player {
     public void setGettingOutOfPenaltyBox(boolean gettingOutOfPenaltyBox) {
         isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
     }
-
-    private boolean isGettingOutOfPenaltyBox;
-
 
     public String getName() {
         return name;

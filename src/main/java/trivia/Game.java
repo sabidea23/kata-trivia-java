@@ -6,15 +6,16 @@ public class Game implements IGame {
 
    private final List<Player> players = new ArrayList<>();
    private final Map<Category, Queue<String>> questions;
-
    private int currentPlayer = 0;
 
+
    public Game() {
-      this.questions = QuestionFactory.createDefaultQuestions(50);
+      this.questions = QuestionFactory.createDefaultQuestions(GameConstants.DEFAULT_QUESTION_COUNT);
    }
 
    public void add(String playerName) {
       Player player = new Player(playerName);
+      player.setPlace(1);
       players.add(player);
 
       System.out.println(playerName + " was added");
@@ -46,7 +47,9 @@ public class Game implements IGame {
 
    private void movePlayer(Player player, int roll) {
       int newPlace = player.getPlace() + roll;
-      if (newPlace > 12) newPlace -= 12;
+      if (newPlace > GameConstants.MAX_BOARD_POSITION) {
+         newPlace -= GameConstants.MAX_BOARD_POSITION;
+      }
       player.setPlace(newPlace);
 
       System.out.println(player.getName() + "'s new location is " + newPlace);
@@ -63,7 +66,7 @@ public class Game implements IGame {
    }
 
    private Category currentCategory() {
-      return Category.fromPlace(players.get(currentPlayer).getPlace());
+      return Category.getCategoryForPlace(players.get(currentPlayer).getPlace());
    }
 
    public boolean handleCorrectAnswer() {
@@ -110,6 +113,6 @@ public class Game implements IGame {
    }
 
    private boolean didPlayerWin() {
-      return !(players.get(currentPlayer).getPurse() == 6);
+      return !(players.get(currentPlayer).getPurse() == GameConstants.WINNING_COINS);
    }
 }

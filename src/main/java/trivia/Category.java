@@ -13,7 +13,7 @@ public enum Category {
         };
     }
 
-    public static Category fromPlace(int place) {
+    public static Category getCategoryForPlace(int place) {
         int pos = (place - 1) % 12;
         return switch (pos) {
             case 0, 4, 8 -> POP;
