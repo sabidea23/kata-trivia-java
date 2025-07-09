@@ -33,6 +33,8 @@ public class PlayGame {
          int roll = readRoll();
          aGame.roll(roll);
 
+         // logical error
+         // player should not answer questions if they are in the penalty box and rolled an odd number
          System.out.print(">> Was the answer correct? [y/n] ");
          boolean correct = readYesNo();
          if (correct) {
