@@ -8,7 +8,6 @@ public class Game implements IGame {
    private final Map<Category, Queue<String>> questions;
 
    private int currentPlayer = 0;
-   private boolean isGettingOutOfPenaltyBox;
 
    public Game() {
       this.questions = QuestionFactory.createDefaultQuestions(50);
@@ -30,13 +29,13 @@ public class Game implements IGame {
 
       if (player.isInPenaltyBox()) {
          if (roll % 2 != 0) {
-            isGettingOutOfPenaltyBox = true;
+            player.setGettingOutOfPenaltyBox(true);
             System.out.println(player.getName() + " is getting out of the penalty box");
 
             movePlayer(player, roll);
             printCategoryAndAsk();
          } else {
-            isGettingOutOfPenaltyBox = false;
+            player.setGettingOutOfPenaltyBox(false);
             System.out.println(player.getName() + " is not getting out of the penalty box");
          }
       } else {
@@ -71,7 +70,7 @@ public class Game implements IGame {
       Player player = players.get(currentPlayer);
 
       if (player.isInPenaltyBox()) {
-         if (isGettingOutOfPenaltyBox) {
+         if (player.isGettingOutOfPenaltyBox()) {
             System.out.println("Answer was correct!!!!");
             player.setPurse(player.getPurse() + 1);
             System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");

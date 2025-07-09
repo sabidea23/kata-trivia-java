@@ -12,6 +12,17 @@ public class Player {
         this.place = 1;
     }
 
+    public boolean isGettingOutOfPenaltyBox() {
+        return isGettingOutOfPenaltyBox;
+    }
+
+    public void setGettingOutOfPenaltyBox(boolean gettingOutOfPenaltyBox) {
+        isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
+    }
+
+    private boolean isGettingOutOfPenaltyBox;
+
+
     public String getName() {
         return name;
     }
