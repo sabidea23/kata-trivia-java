@@ -9,9 +9,7 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        this.purse = 0;
         this.place = 1;
-        this.inPenaltyBox = false;
     }
 
     public String getName() {
