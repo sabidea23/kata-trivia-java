@@ -5,22 +5,13 @@ import java.util.*;
 public class Game implements IGame {
 
    private final List<Player> players = new ArrayList<>();
-   private final Map<Category, Queue<String>> questions = new EnumMap<>(Category.class);
+   private final Map<Category, Queue<String>> questions;
 
    private int currentPlayer = 0;
    private boolean isGettingOutOfPenaltyBox;
 
    public Game() {
-      for (Category category : Category.values()) {
-         questions.put(category, new LinkedList<>());
-      }
-
-      for (int i = 0; i < 50; i++) {
-         questions.get(Category.POP).add("Pop Question " + i);
-         questions.get(Category.SCIENCE).add("Science Question " + i);
-         questions.get(Category.SPORTS).add("Sports Question " + i);
-         questions.get(Category.ROCK).add("Rock Question " + i);
-      }
+      this.questions = QuestionFactory.createDefaultQuestions(50);
    }
 
    public void add(String playerName) {
